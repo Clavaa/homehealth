@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Evergreen & Clay palette (Style Bible, Site 3) ─────────── */
+  --color-juniper: #1e4d45;
+  --color-juniper-deep: #163a34; /* hover state for juniper */
+  --color-ink: #22302c;
+  --color-oat: #faf6ef;
+  --color-sand: #efe5d3;
+  --color-clay: #c96f4a;
+  --color-clay-deep: #b25b38; /* hover state for clay */
+  --color-sage: #dce7df;
+  --color-butter: #e9c46a;
+  --color-mist: #f2efe6; /* quiet borders on oat */
+
+  /* ── Type ───────────────────────────────────────────────────── */
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-figtree), system-ui, sans-serif;
+
+  /* ── Radii: soft 24px cards, pills, one-oversized-corner ────── */
+  --radius-card: 24px;
+  --radius-corner: 80px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-oat);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+/* The one Fraunces-italic clay word per hero ("family" trick). */
+.hero-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-clay);
+}
+
+/* Focus visibility — the audience skews older; make focus unmistakable. */
+:focus-visible {
+  outline: 3px solid var(--color-clay);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--color-butter);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
