@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCallBar } from "@/components/StickyCallBar";
 import { JsonLd } from "@/components/JsonLd";
+import { isIndexable } from "@/lib/indexable";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -37,6 +38,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
   },
+  // robots.txt keeps well-behaved crawlers out; this keeps a directly-linked
+  // URL from being indexed anyway. Both lift together via NEXT_PUBLIC_INDEXABLE.
+  robots: isIndexable
+    ? undefined
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
 
 const orgJsonLd = {
