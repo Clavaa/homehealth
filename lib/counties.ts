@@ -1,4 +1,5 @@
 import countiesJson from "@/data/counties.json";
+import adjacencyJson from "@/data/county-adjacency.json";
 import { states, type StateInfo } from "@/lib/states";
 
 /**
@@ -118,21 +119,62 @@ export function getCounty(stateSlug: string, countySlug: string): County | undef
   return countiesForState(stateSlug).find((c) => c.slug === countySlug);
 }
 
+const byFips = new Map(counties.map((c) => [c.fips, c]));
+
+export function getCountyByFips(fips: string): County | undefined {
+  return byFips.get(fips);
+}
+
+const adjacency = adjacencyJson as Record<string, string[]>;
+
 /**
- * 5–8 sibling counties to cross-link: the population neighbors on either side
- * of this county in the state's sorted list (adjacency data isn't in the
- * dataset; similar-size counties are the most useful comparison anyway).
+ * Counties that actually share a border, from the Census county adjacency
+ * file — largest first. Connecticut's planning regions and a few reorganized
+ * Alaska boroughs postdate that file; `neighborCounties` falls back for those.
+ */
+export function borderingCounties(county: County): County[] {
+  return (adjacency[county.fips] ?? [])
+    .map((f) => byFips.get(f))
+    .filter((c): c is County => Boolean(c))
+    .sort((a, b) => b.pop - a.pop);
+}
+
+/**
+ * Counties to cross-link, in-state. Real bordering counties when we have them
+ * (they are what a family actually drives to), topped up with the closest
+ * population neighbors when a county borders few in-state peers — island and
+ * corner counties would otherwise link to almost nothing.
  */
 export function neighborCounties(county: County, max = 7): County[] {
+  const out: County[] = [];
+  const seen = new Set([county.fips]);
+  for (const c of borderingCounties(county)) {
+    if (c.stateSlug === county.stateSlug && !seen.has(c.fips)) {
+      seen.add(c.fips);
+      out.push(c);
+      if (out.length >= max) return out;
+    }
+  }
   const list = countiesForState(county.stateSlug);
   const i = list.findIndex((c) => c.fips === county.fips);
-  if (i === -1) return list.slice(0, max);
-  const out: County[] = [];
-  for (let d = 1; out.length < max && (i - d >= 0 || i + d < list.length); d++) {
-    if (i - d >= 0) out.push(list[i - d]);
-    if (out.length < max && i + d < list.length) out.push(list[i + d]);
+  const start = i === -1 ? 0 : i;
+  for (let d = 1; out.length < max && (start - d >= 0 || start + d < list.length); d++) {
+    for (const j of [start - d, start + d]) {
+      const c = list[j];
+      if (c && !seen.has(c.fips) && out.length < max) {
+        seen.add(c.fips);
+        out.push(c);
+      }
+    }
   }
   return out;
+}
+
+/** Bordering counties in other states — real for anyone near a state line. */
+export function outOfStateNeighbors(county: County, max = 4): County[] {
+  return borderingCounties(county)
+    .filter((c) => c.stateSlug !== county.stateSlug)
+    .slice(0, max);
 }
 
 /** "about 665,000" / "about 1.1 million" / "about 4,300" style rounding. */

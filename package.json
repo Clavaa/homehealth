@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "data": "python3 scripts/build-county-data.py --fetch",
+    "data:build": "python3 scripts/build-county-data.py",
+    "audit": "node scripts/audit-county-pages.mjs"
   },
   "dependencies": {
     "next": "^15.5.2",
