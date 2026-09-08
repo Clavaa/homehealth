@@ -12,14 +12,15 @@ export function Footer() {
             <Logo reversed />
             <p className="mt-3 max-w-xs text-[15px] leading-relaxed">
               Home care from a local team in {site.county}, {site.stateAbbr}.
-              A person answers our phone, day and night.
             </p>
-            <a
-              href={site.phoneHref}
-              className="mt-4 inline-block text-lg font-semibold text-butter hover:text-white"
-            >
-              {site.phone}
-            </a>
+            {site.phone && site.phoneHref && (
+              <a
+                href={site.phoneHref}
+                className="mt-4 inline-block text-lg font-semibold text-butter hover:text-white"
+              >
+                {site.phone}
+              </a>
+            )}
             <p className="mt-1 text-sm">
               <a href={`mailto:${site.email}`} className="hover:text-white">
                 {site.email}

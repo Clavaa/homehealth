@@ -41,13 +41,17 @@ export default function HomePage() {
                 Book a free care assessment
               </Pill>
               {/* The phone number IS the label — this audience calls. */}
-              <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-                {site.phone}
-              </Pill>
+              {site.phone && site.phoneHref && (
+                <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+                  {site.phone}
+                </Pill>
+              )}
             </div>
-            <p className="mt-4 text-[15px] text-ink/60">
-              A person answers, 24/7 — nights, weekends, holidays.
-            </p>
+            {site.phone && (
+              <p className="mt-4 text-[15px] text-ink/60">
+                A person answers, 24/7 — nights, weekends, holidays.
+              </p>
+            )}
           </div>
 
           <PhotoPlaceholder
@@ -149,19 +153,20 @@ export default function HomePage() {
               Rather just talk it through?
             </h3>
             <p className="mt-3 text-ink/80">
-              Most families call. Tell us what happened this week — the fall,
-              the diagnosis, the discharge — and we&rsquo;ll tell you honestly
-              what would help.
+              Tell us what happened this week — the fall, the diagnosis, the
+              discharge — and we&rsquo;ll tell you honestly what would help.
             </p>
             <a
-              href={site.phoneHref}
+              href={site.phone && site.phoneHref ? site.phoneHref : `mailto:${site.email}`}
               className="mt-5 inline-flex items-center justify-center rounded-full border-2 border-juniper px-7 py-3.5 text-lg font-semibold text-juniper transition-colors hover:bg-juniper hover:text-white"
             >
-              {site.phone}
+              {site.phone ?? site.email}
             </a>
-            <p className="mt-3 text-[14px] text-ink/60">
-              A person answers, 24/7. No phone trees, no callbacks-in-3-days.
-            </p>
+            {site.phone && (
+              <p className="mt-3 text-[14px] text-ink/60">
+                A person answers, 24/7. No phone trees, no callbacks-in-3-days.
+              </p>
+            )}
             <div className="mt-6 border-t border-mist pt-5">
               <PhotoPlaceholder
                 label="Care team photo"

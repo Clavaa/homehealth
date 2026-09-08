@@ -28,9 +28,11 @@ export default function NotFound() {
           <Pill href="/#assessment" variant="clay" size="lg">
             Book a free care assessment
           </Pill>
-          <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-            {site.phone}
-          </Pill>
+          {site.phone && site.phoneHref && (
+            <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+              {site.phone}
+            </Pill>
+          )}
         </div>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[15px] font-medium">
           <Link href="/" className="text-juniper underline underline-offset-4">

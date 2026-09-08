@@ -103,9 +103,11 @@ export default async function ServicePage({
             <Pill href="/#assessment" variant="clay" size="lg">
               Book a free care assessment
             </Pill>
-            <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-              {site.phone}
-            </Pill>
+            {site.phone && site.phoneHref && (
+              <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+                {site.phone}
+              </Pill>
+            )}
           </div>
         </div>
         <PhotoPlaceholder
@@ -186,9 +188,15 @@ export default async function ServicePage({
             {service.closer}
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Pill href={site.phoneHref} variant="juniper" size="lg">
-              Call {site.phone}
-            </Pill>
+            {site.phone && site.phoneHref ? (
+              <Pill href={site.phoneHref} variant="juniper" size="lg">
+                Call {site.phone}
+              </Pill>
+            ) : (
+              <Pill href="/#assessment" variant="juniper" size="lg">
+                Book a free care assessment
+              </Pill>
+            )}
             <Link
               href="/pricing"
               className="text-[16px] font-semibold text-juniper underline underline-offset-4"

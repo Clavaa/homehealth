@@ -94,9 +94,11 @@ export default function HhaRolePage() {
           <Pill href="#apply" variant="juniper" size="lg">
             Apply in two minutes
           </Pill>
-          <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-            {site.phone}
-          </Pill>
+          {site.phone && site.phoneHref && (
+            <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+              {site.phone}
+            </Pill>
+          )}
         </div>
       </section>
 
@@ -146,17 +148,28 @@ export default function HhaRolePage() {
       <section id="apply" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20">
         <div className="grid items-start gap-8 lg:grid-cols-[1.4fr_1fr]">
           <CareerForm role="Home Health Aide" />
-          <div className="rounded-[var(--radius-card)] bg-white p-8 shadow-sm ring-1 ring-mist">
-            <h3 className="text-xl text-juniper">Prefer to just call?</h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
-              Call{" "}
-              <a href={site.phoneHref} className="font-semibold text-juniper underline">
-                {site.phone}
-              </a>{" "}
-              and say you&rsquo;re applying — a real person from the scheduling
-              team will talk you through it.
-            </p>
-          </div>
+          {site.phone && site.phoneHref ? (
+            <div className="rounded-[var(--radius-card)] bg-white p-8 shadow-sm ring-1 ring-mist">
+              <h3 className="text-xl text-juniper">Prefer to just call?</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
+                Call{" "}
+                <a href={site.phoneHref} className="font-semibold text-juniper underline">
+                  {site.phone}
+                </a>{" "}
+                and say you&rsquo;re applying — a real person from the
+                scheduling team will talk you through it.
+              </p>
+            </div>
+          ) : (
+            <div className="rounded-[var(--radius-card)] bg-white p-8 shadow-sm ring-1 ring-mist">
+              <h3 className="text-xl text-juniper">What happens next</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
+                Send the form and a real person from the scheduling team reads
+                it — usually the same business day. No portal, no automated
+                rejection email, no six-stage process.
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </>

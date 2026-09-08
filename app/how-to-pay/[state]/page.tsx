@@ -222,9 +222,11 @@ export default async function StateHowToPayPage({
               <Pill href="/#assessment" variant="clay" size="lg">
                 Book a free care assessment
               </Pill>
-              <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-                {site.phone}
-              </Pill>
+              {site.phone && site.phoneHref && (
+                <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+                  {site.phone}
+                </Pill>
+              )}
             </div>
           </div>
         </section>

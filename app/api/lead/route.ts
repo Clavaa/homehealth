@@ -87,7 +87,9 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         personalizations: [{ to: [{ email: site.leadInbox }] }],
-        from: { email: site.email, name: site.name },
+        // Must be a verified sender on whichever SendGrid account owns the
+        // key — see site.config.ts leadFrom.
+        from: { email: site.leadFrom, name: site.name },
         subject,
         content: [{ type: "text/plain", value: lines.join("\n") }],
       }),

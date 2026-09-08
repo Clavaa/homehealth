@@ -301,7 +301,9 @@ export function countyFaqs(
         }
       : {
           q: `Does ${site.name} provide caregivers in ${c.name}?`,
-          a: `Not directly — our own caregivers serve the ${site.metro} area of ${site.state}. This page is a free guide for ${c.name} families: what care really costs here, who provides it, and which programs can help pay. If you want to talk any of it through, a person answers our phone.`,
+          a: `Not directly — our own caregivers serve the ${site.metro} area of ${site.state}. This page is a free guide for ${c.name} families: what care really costs here, who provides it, and which programs can help pay.${
+            site.phone ? " If you want to talk any of it through, a person answers our phone." : ""
+          }`,
         },
   );
 

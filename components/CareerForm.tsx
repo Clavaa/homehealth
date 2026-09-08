@@ -44,11 +44,16 @@ export function CareerForm({ role = "Caregiver / Home Health Aide" }: { role?: s
         <h3 className="text-2xl text-juniper">Got it — talk soon.</h3>
         <p className="mt-3 text-ink/80">
           Thanks for applying. Our scheduler will call you, usually the same
-          business day. Want to skip the wait? Call{" "}
-          <a href={site.phoneHref} className="font-semibold text-juniper underline">
-            {site.phone}
-          </a>{" "}
-          and say you&rsquo;re applying.
+          business day.{" "}
+          {site.phone && site.phoneHref && (
+            <>
+              Want to skip the wait? Call{" "}
+              <a href={site.phoneHref} className="font-semibold text-juniper underline">
+                {site.phone}
+              </a>{" "}
+              and say you&rsquo;re applying.
+            </>
+          )}
         </p>
       </div>
     );
@@ -141,9 +146,9 @@ export function CareerForm({ role = "Caregiver / Home Health Aide" }: { role?: s
 
       {status === "error" && (
         <p className="mt-3 text-[15px] font-medium text-clay-deep" role="alert">
-          Something went wrong on our end. Please call{" "}
-          <a href={site.phoneHref} className="underline">
-            {site.phone}
+          Something went wrong on our end. Please email{" "}
+          <a href={`mailto:${site.email}`} className="underline">
+            {site.email}
           </a>{" "}
           and say you&rsquo;re applying.
         </p>

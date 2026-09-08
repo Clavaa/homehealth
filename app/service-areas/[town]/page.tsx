@@ -68,7 +68,7 @@ export default async function TownPage({
     "@id": `${site.domain}/service-areas/${town.slug}/#localbusiness`,
     name: `${site.name} — ${town.name}`,
     url: `${site.domain}/service-areas/${town.slug}`,
-    telephone: site.phone,
+    ...(site.phone ? { telephone: site.phone } : {}),
     parentOrganization: { "@id": `${site.domain}/#organization` },
     areaServed: {
       "@type": "City",
@@ -109,9 +109,11 @@ export default async function TownPage({
             <Pill href="/#assessment" variant="clay" size="lg">
               Book a free care assessment
             </Pill>
-            <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-              {site.phone}
-            </Pill>
+            {site.phone && site.phoneHref && (
+              <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+                {site.phone}
+              </Pill>
+            )}
           </div>
         </div>
         <PhotoPlaceholder

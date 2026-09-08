@@ -59,12 +59,24 @@ export function AssessmentForm({ compact = false }: { compact?: boolean }) {
         <h3 className="text-2xl text-juniper">Thank you — we&rsquo;re on it.</h3>
         <p className="mt-3 text-ink/80">
           Someone from our {site.metro} team will call you shortly — usually
-          within minutes during the day. If it&rsquo;s urgent, call us right
-          now at{" "}
-          <a href={site.phoneHref} className="font-semibold text-juniper underline">
-            {site.phone}
-          </a>
-          . A person answers, 24/7.
+          within minutes during the day.{" "}
+          {site.phone && site.phoneHref ? (
+            <>
+              If it&rsquo;s urgent, call us right now at{" "}
+              <a href={site.phoneHref} className="font-semibold text-juniper underline">
+                {site.phone}
+              </a>
+              .
+            </>
+          ) : (
+            <>
+              If it&rsquo;s urgent, email{" "}
+              <a href={`mailto:${site.email}`} className="font-semibold text-juniper underline">
+                {site.email}
+              </a>
+              .
+            </>
+          )}
         </p>
       </div>
     );
@@ -190,22 +202,26 @@ export function AssessmentForm({ compact = false }: { compact?: boolean }) {
 
       {status === "error" && (
         <p className="mt-3 text-[15px] font-medium text-clay-deep" role="alert">
-          Something went wrong on our end. Please call us at{" "}
-          <a href={site.phoneHref} className="underline">
-            {site.phone}
+          Something went wrong on our end. Please email{" "}
+          <a href={`mailto:${site.email}`} className="underline">
+            {site.email}
           </a>{" "}
-          — a person will answer.
+          and we&rsquo;ll pick it up from there.
         </p>
       )}
 
       {situation !== "caregiver-job" && (
         <p className="mt-4 text-[13px] leading-relaxed text-ink/60">
           Confidential — your details go only to our local care team, and we
-          never share them. Prefer to talk?{" "}
-          <a href={site.phoneHref} className="font-medium text-juniper underline">
-            {site.phone}
-          </a>
-          , a person answers 24/7.
+          never share them.{" "}
+          {site.phone && site.phoneHref && (
+            <>
+              Prefer to talk?{" "}
+              <a href={site.phoneHref} className="font-medium text-juniper underline">
+                {site.phone}
+              </a>
+            </>
+          )}
         </p>
       )}
     </form>

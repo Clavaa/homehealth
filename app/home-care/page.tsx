@@ -63,12 +63,18 @@ export default function HomeCareIndexPage() {
         </ul>
         <p className="mt-8 max-w-2xl text-[15px] leading-relaxed text-ink/70">
           We provide care in the {site.metro}, {site.stateAbbr} area. Everywhere
-          else, these pages are a free guide — and a person still answers our
-          phone, 24/7, if you want to talk your options through:{" "}
-          <a href={site.phoneHref} className="font-semibold text-juniper underline underline-offset-2">
-            {site.phone}
-          </a>
-          .
+          else, these pages are a free guide — written to be useful even if you
+          never speak to us.{" "}
+          {site.phone && site.phoneHref ? (
+            <>
+              If you want to talk your options through, a person answers our
+              phone, 24/7:{" "}
+              <a href={site.phoneHref} className="font-semibold text-juniper underline underline-offset-2">
+                {site.phone}
+              </a>
+              .
+            </>
+          ) : null}
         </p>
       </section>
     </>

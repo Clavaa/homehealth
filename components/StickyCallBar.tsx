@@ -3,10 +3,27 @@ import { site } from "@/site.config";
 /**
  * Mobile-only sticky bottom bar. This audience calls (senior-care call leads
  * convert ~41% vs ~1.7% for forms — Style Bible CRO spine), so the call
- * button carries the primary weight. Juniper, not clay — the page's single
- * clay accent belongs to the content, not a persistent overlay.
+ * button carries the primary weight when there IS a number. Until then the
+ * bar degrades to a single full-width assessment CTA — a dead call button
+ * would cost more than it earns. Juniper, not clay: the page's single clay
+ * accent belongs to the content, not a persistent overlay.
  */
 export function StickyCallBar() {
+  if (!site.phone || !site.phoneHref) {
+    return (
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-mist bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+        <div className="mx-auto max-w-xl">
+          <a
+            href="/#assessment"
+            className="flex items-center justify-center whitespace-nowrap rounded-full bg-juniper px-4 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-juniper-deep"
+          >
+            Book a free assessment
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-mist bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
       <div className="mx-auto flex max-w-xl items-center gap-3">

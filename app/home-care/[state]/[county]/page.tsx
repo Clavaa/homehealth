@@ -334,14 +334,20 @@ export default async function CountyPage({
             <div className="flex flex-col justify-center rounded-[var(--radius-card)] rounded-br-[var(--radius-corner)] bg-juniper p-8 text-white">
               <h2 className="text-2xl text-white">Want to talk it through?</h2>
               <p className="mt-3 text-[15px] leading-relaxed text-white/85">
-                We provide care in the {site.metro}, {site.stateAbbr} area — but a person answers
-                our line, and we&rsquo;re glad to help any family think through the options in{" "}
+                We provide care in the {site.metro}, {site.stateAbbr} area — but
+                we&rsquo;re glad to help any family think through the options in{" "}
                 {c.name}.
               </p>
               <div className="mt-6">
-                <Pill href={site.phoneHref} variant="clay" size="lg" className="w-full sm:w-auto">
-                  Call {site.phone}
-                </Pill>
+                {site.phone && site.phoneHref ? (
+                  <Pill href={site.phoneHref} variant="clay" size="lg" className="w-full sm:w-auto">
+                    Call {site.phone}
+                  </Pill>
+                ) : (
+                  <Pill href="/#assessment" variant="clay" size="lg" className="w-full sm:w-auto">
+                    Book a free assessment
+                  </Pill>
+                )}
               </div>
             </div>
           </div>

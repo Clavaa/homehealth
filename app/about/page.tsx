@@ -50,10 +50,17 @@ const values = [
 ];
 
 const reasons = [
-  {
-    title: "A person answers, 24/7",
-    body: "Nights, weekends, holidays — you reach a person, not a phone tree. When care is in your home, questions don't keep business hours.",
-  },
+  // The 24/7 answering promise is only true once site.phone exists; until then
+  // we make a claim we can actually keep.
+  site.phone
+    ? {
+        title: "A person answers, 24/7",
+        body: "Nights, weekends, holidays — you reach a person, not a phone tree. When care is in your home, questions don't keep business hours.",
+      }
+    : {
+        title: "A real person reads every request",
+        body: "No portal, no ticket number, no automated reply. Tell us what happened this week and someone who can actually help writes back.",
+      },
   {
     title: "Structure behind every visit",
     body: "An intake coordinator who listens, a care coordinator who plans, a scheduler who keeps visits steady, and a verification team confirming every visit happened. You see one caregiver; a whole team stands behind them.",
@@ -112,7 +119,7 @@ export default function AboutPage() {
             <p>
               We serve families paying privately and families whose care is
               covered by Medicaid home-care programs — same caregivers, same
-              standards, same phone number that a person actually answers.
+              standards, same team behind them.
             </p>
           </div>
           <div className="rounded-[var(--radius-card)] rounded-tr-[var(--radius-corner)] bg-sand p-8">

@@ -59,12 +59,14 @@ export function MobileMenu() {
               >
                 Book a free assessment
               </Link>
-              <a
-                href={site.phoneHref}
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-juniper px-6 py-3 text-[16px] font-semibold text-juniper transition-colors hover:bg-juniper hover:text-white"
-              >
-                Call {site.phone}
-              </a>
+              {site.phone && site.phoneHref && (
+                <a
+                  href={site.phoneHref}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-juniper px-6 py-3 text-[16px] font-semibold text-juniper transition-colors hover:bg-juniper hover:text-white"
+                >
+                  Call {site.phone}
+                </a>
+              )}
               <Link
                 href="/careers"
                 onClick={() => setOpen(false)}

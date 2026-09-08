@@ -43,12 +43,21 @@ export function ZipCheck() {
       {checked && (
         <p className="mt-4 max-w-md rounded-2xl bg-white/80 px-5 py-4 text-[15px] leading-relaxed text-ink/85" role="status">
           We serve {site.county} and the surrounding communities, and{" "}
-          <strong>{checked}</strong> is likely in range. Call{" "}
-          <a href={site.phoneHref} className="font-semibold text-juniper underline">
-            {site.phone}
-          </a>{" "}
-          and we&rsquo;ll confirm your address on the spot — a person answers,
-          24/7.
+          <strong>{checked}</strong> is likely in range.{" "}
+          {site.phone && site.phoneHref ? (
+            <>
+              Call{" "}
+              <a href={site.phoneHref} className="font-semibold text-juniper underline">
+                {site.phone}
+              </a>{" "}
+              and we&rsquo;ll confirm your address on the spot.
+            </>
+          ) : (
+            <>
+              Book a free assessment below and we&rsquo;ll confirm your exact
+              address when we reply.
+            </>
+          )}
         </p>
       )}
     </div>

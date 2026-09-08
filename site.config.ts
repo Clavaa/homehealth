@@ -10,13 +10,34 @@ export const site = {
   name: "Juniper at Home",
   // Final production domain (no trailing slash)
   domain: "https://juniperathome.com",
-  // TODO: real call-tracked local phone number
-  phone: "(414) 555-0100",
-  phoneHref: "tel:+14145550100", // TODO: keep in sync with phone
-  // TODO: confirm this inbox exists before launch
+  /**
+   * Phone is INTENTIONALLY OFF until a real call-tracked local number exists.
+   * Publishing a placeholder number is worse than publishing none: it invites
+   * calls that reach nobody. Every phone affordance on the site — header link,
+   * sticky call bar, hero CTA, "a person answers 24/7" copy — is gated on this
+   * being non-null, so setting it restores all of them at once.
+   *
+   * To turn calling back on: set both fields and keep them in sync, e.g.
+   *   phone: "(414) 555-0100",
+   *   phoneHref: "tel:+14145550100",
+   */
+  phone: null as string | null,
+  phoneHref: null as string | null,
+
+  // Public-facing address shown in copy. TODO: confirm before launch.
   email: "care@juniperathome.com",
-  // TODO: where /api/lead delivers (can differ from public email)
-  leadInbox: "care@juniperathome.com",
+
+  /**
+   * Where /api/lead delivers, and who it sends AS.
+   *
+   * INTERIM: both point at the Offendersearch support mailbox, because that is
+   * the SendGrid account whose key this deployment uses and SendGrid will only
+   * send from a verified sender. Flip both to a juniperathome.com address once
+   * that domain is verified in its own SendGrid account — no other code change
+   * is needed. Env vars override without a redeploy.
+   */
+  leadInbox: process.env.LEAD_INBOX || "support@offendersearch.app",
+  leadFrom: process.env.LEAD_FROM || "support@offendersearch.app",
 
   // ── Geography ────────────────────────────────────────────────
   // TODO: real home metro + county + state

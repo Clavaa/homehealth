@@ -51,7 +51,7 @@ const orgJsonLd = {
   "@id": `${site.domain}/#organization`,
   name: site.name,
   url: site.domain,
-  telephone: site.phone,
+  ...(site.phone ? { telephone: site.phone } : {}),
   email: site.email,
   description: `Non-medical home care agency serving ${site.county}, ${site.stateAbbr}: companion care, personal care, dementia care, 24-hour, live-in, overnight, respite, post-hospital, and veterans home care.`,
   areaServed: [

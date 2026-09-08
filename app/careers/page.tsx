@@ -60,9 +60,11 @@ export default function CareersPage() {
             <Pill href="#apply" variant="juniper" size="lg">
               Apply in two minutes
             </Pill>
-            <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
-              {site.phone}
-            </Pill>
+            {site.phone && site.phoneHref && (
+              <Pill href={site.phoneHref} variant="juniperOutline" size="lg">
+                {site.phone}
+              </Pill>
+            )}
           </div>
         </div>
         <PhotoPlaceholder

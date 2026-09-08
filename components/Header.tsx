@@ -30,9 +30,13 @@ export function Header() {
       <div className="bg-juniper text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2 text-sm sm:px-6">
           <p className="hidden sm:block">
-            A person answers, 24/7 — {site.county} owned &amp; operated
+            {site.phone
+              ? `A person answers, 24/7 — ${site.county} owned & operated`
+              : `${site.county} owned & operated — free in-home assessment`}
           </p>
-          <p className="sm:hidden">A person answers, 24/7</p>
+          <p className="sm:hidden">
+            {site.phone ? "A person answers, 24/7" : `${site.stateAbbr} owned & operated`}
+          </p>
           <Link
             href="/careers"
             className="shrink-0 font-medium text-white/85 underline-offset-4 hover:text-white hover:underline"
@@ -60,16 +64,19 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Desktop utilities: quiet phone link + the one clay CTA */}
+          {/* Desktop utilities: the one clay CTA. The phone link returns
+              automatically once site.phone is set. */}
           <div className="hidden shrink-0 items-center gap-4 lg:flex">
-            <a
-              href={site.phoneHref}
-              aria-label={`Call us at ${site.phone}`}
-              className="inline-flex items-center gap-2 whitespace-nowrap text-[15px] font-semibold text-juniper underline-offset-4 hover:underline"
-            >
-              <PhoneIcon />
-              <span className="hidden xl:inline">{site.phone}</span>
-            </a>
+            {site.phone && site.phoneHref && (
+              <a
+                href={site.phoneHref}
+                aria-label={`Call us at ${site.phone}`}
+                className="inline-flex items-center gap-2 whitespace-nowrap text-[15px] font-semibold text-juniper underline-offset-4 hover:underline"
+              >
+                <PhoneIcon />
+                <span className="hidden xl:inline">{site.phone}</span>
+              </a>
+            )}
             <Link
               href="/#assessment"
               className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-clay px-5 py-2.5 text-[15px] font-medium text-white transition-colors hover:bg-clay-deep"
@@ -80,13 +87,15 @@ export function Header() {
 
           {/* Mobile utilities: compact phone icon + hamburger */}
           <div className="flex shrink-0 items-center gap-2.5 lg:hidden">
-            <a
-              href={site.phoneHref}
-              aria-label={`Call us at ${site.phone}`}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-juniper text-juniper transition-colors hover:bg-juniper hover:text-white"
-            >
-              <PhoneIcon />
-            </a>
+            {site.phone && site.phoneHref && (
+              <a
+                href={site.phoneHref}
+                aria-label={`Call us at ${site.phone}`}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-juniper text-juniper transition-colors hover:bg-juniper hover:text-white"
+              >
+                <PhoneIcon />
+              </a>
+            )}
             <MobileMenu />
           </div>
         </div>
