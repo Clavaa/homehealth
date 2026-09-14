@@ -5,6 +5,7 @@ import { site, hourlyRange } from "@/site.config";
 import { services } from "@/lib/services";
 import { Photo } from "@/components/Photo";
 import { MidPageCTA } from "@/components/MidPageCTA";
+import { RelatedLinks } from "@/components/RelatedLinks";
 import { RecruitBand } from "@/components/RecruitBand";
 import { JsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -194,6 +195,46 @@ export default async function TownPage({
           body="A care manager comes to the house, listens, and writes up a plan — free, and yours to keep whether or not you hire us."
         />
       </div>
+
+      <RelatedLinks
+        heading={`More for ${town.name} families`}
+        tone="sand"
+        links={[
+          {
+            href: `/home-care/${site.state.toLowerCase().replace(/ /g, "-")}/${site.county
+              .replace(/ County$/, "")
+              .toLowerCase()
+              .replace(/ /g, "-")}`,
+            label: `Home care in ${site.county}`,
+            note: `Local costs, Medicaid programs, and how many agencies serve the county.`,
+          },
+          {
+            href: `/how-to-pay/${site.state.toLowerCase().replace(/ /g, "-")}`,
+            label: `Paying for care in ${site.state}`,
+            note: "Which programs pay, who qualifies, and how long approval takes.",
+          },
+          {
+            href: "/pricing",
+            label: "What care costs",
+            note: `The same rates apply in ${town.name} as everywhere we work.`,
+          },
+          {
+            href: "/services",
+            label: "Every kind of care",
+            note: "Companion through 24-hour, and how to tell which you need.",
+          },
+          {
+            href: `/home-care/${site.state.toLowerCase().replace(/ /g, "-")}`,
+            label: `Across ${site.state}`,
+            note: "County-by-county costs and programs statewide.",
+          },
+          {
+            href: "/careers",
+            label: `Caregiver jobs in ${town.name}`,
+            note: "We hire from the same neighbourhoods we serve.",
+          },
+        ]}
+      />
 
       {/* Nearby towns */}
       <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">

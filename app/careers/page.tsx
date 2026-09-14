@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { site } from "@/site.config";
+import { RelatedLinks } from "@/components/RelatedLinks";
 import { Photo } from "@/components/Photo";
 import { CareerForm } from "@/components/CareerForm";
 import { Pill } from "@/components/Pill";
@@ -166,6 +167,41 @@ export default function CareersPage() {
           </div>
         </div>
       </section>
+      <RelatedLinks
+        heading="What the work actually looks like"
+        links={[
+          {
+            href: "/careers/home-health-aide",
+            label: "The home health aide role, in full",
+            note: "Pay, schedule, training, and how to apply.",
+          },
+          {
+            href: "/services/companion-care",
+            label: "Companion care",
+            note: "Conversation, meals, errands — where most new caregivers start.",
+          },
+          {
+            href: "/services/personal-care",
+            label: "Personal care",
+            note: "Hands-on help with bathing and dressing. Paid training provided.",
+          },
+          {
+            href: "/services/dementia-care",
+            label: "Dementia care",
+            note: "The specialism worth training into, and what it pays.",
+          },
+          {
+            href: "/about",
+            label: `Who you would be working for`,
+            note: "How we structure supervision, scheduling, and backup.",
+          },
+          {
+            href: "/service-areas",
+            label: `Where our caregivers work`,
+            note: `The towns across ${site.county} you could be assigned to.`,
+          },
+        ]}
+      />
     </>
   );
 }

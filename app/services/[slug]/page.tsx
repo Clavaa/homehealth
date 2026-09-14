@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { site } from "@/site.config";
-import { services, getService } from "@/lib/services";
+import { relatedServices, services, getService } from "@/lib/services";
 import { Photo } from "@/components/Photo";
 import { MidPageCTA } from "@/components/MidPageCTA";
 import { ServiceAreaModule } from "@/components/ServiceAreaModule";
@@ -10,6 +10,7 @@ import { RecruitBand } from "@/components/RecruitBand";
 import { JsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Pill } from "@/components/Pill";
+import { RelatedLinks } from "@/components/RelatedLinks";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -209,6 +210,32 @@ export default async function ServicePage({
           </div>
         </div>
       </section>
+
+      <RelatedLinks
+        heading="Families weighing this also look at"
+        links={[
+          ...relatedServices(service.slug).map((r) => ({
+            href: `/services/${r.slug}`,
+            label: r.name,
+            note: r.short,
+          })),
+          {
+            href: "/pricing",
+            label: "What this costs",
+            note: "Our published rates and what a quote includes.",
+          },
+          {
+            href: `/how-to-pay/${site.state.toLowerCase().replace(/ /g, "-")}`,
+            label: `Paying for it in ${site.state}`,
+            note: "The Medicaid programs that cover care at home.",
+          },
+          {
+            href: "/services",
+            label: "Compare every service",
+            note: "All nine, side by side.",
+          },
+        ]}
+      />
 
       <ServiceAreaModule />
       <RecruitBand />

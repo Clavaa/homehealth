@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { site } from "@/site.config";
+import { RelatedLinks } from "@/components/RelatedLinks";
 import { MidPageCTA } from "@/components/MidPageCTA";
 import { RecruitBand } from "@/components/RecruitBand";
 
@@ -244,6 +245,42 @@ export default function AboutPage() {
       </div>
 
       <RecruitBand />
+      <RelatedLinks
+        heading="See how we actually work"
+        tone="sand"
+        links={[
+          {
+            href: "/about/leadership",
+            label: "The people who run it",
+            note: "Who does what, and who you reach when something goes wrong.",
+          },
+          {
+            href: "/pricing",
+            label: "What care costs",
+            note: "How we quote, what a rate includes, and what it does not.",
+          },
+          {
+            href: "/services",
+            label: "Every kind of care we provide",
+            note: "Companion through 24-hour, and how to tell which you need.",
+          },
+          {
+            href: "/how-to-pay",
+            label: "How families pay for it",
+            note: "Private pay, insurance, VA benefits, and Medicaid.",
+          },
+          {
+            href: "/careers",
+            label: "Join our caregiving team",
+            note: "The hiring standards behind everything on this page.",
+          },
+          {
+            href: "/service-areas",
+            label: `Towns we serve`,
+            note: `Where our caregivers live and work across ${site.county}.`,
+          },
+        ]}
+      />
     </>
   );
 }

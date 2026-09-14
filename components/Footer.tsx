@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { site } from "@/site.config";
 import { services } from "@/lib/services";
+import { states } from "@/lib/states";
 import { Logo } from "@/components/Logo";
 
 export function Footer() {
+  const stateSlug = site.state.toLowerCase().replace(/ /g, "-");
+
   return (
     <footer className="bg-ink text-white/80">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
@@ -60,7 +63,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href={`/how-to-pay/${site.state.toLowerCase().replace(/ /g, "-")}`}
+                  href={`/how-to-pay/${stateSlug}`}
                   className="hover:text-white"
                 >
                   Paying for care in {site.state}
@@ -74,6 +77,11 @@ export function Footer() {
               <li>
                 <Link href="/service-areas" className="hover:text-white">
                   Towns we serve
+                </Link>
+              </li>
+              <li>
+                <Link href={`/home-care/${stateSlug}`} className="hover:text-white">
+                  {site.state} county guides
                 </Link>
               </li>
               <li>
@@ -105,10 +113,45 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-wider text-white/50">
+              Popular services
+            </p>
+            <ul className="mt-3 space-y-2 text-[15px]">
+              <li>
+                <Link href="/services/dementia-care" className="hover:text-white">
+                  Dementia &amp; Alzheimer&rsquo;s care
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/24-hour-care" className="hover:text-white">
+                  24-hour care
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/post-hospital-care" className="hover:text-white">
+                  Post-hospital care
+                </Link>
+              </li>
+            </ul>
           </nav>
         </div>
 
-        <div className="mt-12 border-t border-white/15 pt-6 text-sm text-white/50">
+        <nav aria-label="Home care by state" className="mt-12 border-t border-white/15 pt-8">
+          <p className="text-sm font-semibold uppercase tracking-wider text-white/50">
+            Home care costs &amp; Medicaid, by state
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[13px] text-white/60">
+            {states.map((st) => (
+              <li key={st.slug}>
+                <Link href={`/home-care/${st.slug}`} className="hover:text-white">
+                  {st.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="mt-10 border-t border-white/15 pt-6 text-sm text-white/50">
           <p>
             &copy; {new Date().getFullYear()} {site.name}. Serving{" "}
             {site.county} and nearby communities.

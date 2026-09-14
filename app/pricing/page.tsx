@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site, hourlyRange, RATE_TBD } from "@/site.config";
+import { services } from "@/lib/services";
+import { RelatedLinks } from "@/components/RelatedLinks";
 import { pageMeta } from "@/lib/seo";
 import { PricingPersonas } from "@/components/PricingPersonas";
 import { MidPageCTA } from "@/components/MidPageCTA";
@@ -164,6 +166,42 @@ export default function PricingPage() {
       </div>
 
       <RecruitBand />
+      <RelatedLinks
+        heading="Next, the parts most families ask about"
+        tone="sand"
+        links={[
+          {
+            href: `/how-to-pay/${site.state.toLowerCase().replace(/ /g, "-")}`,
+            label: `Paying for care in ${site.state}`,
+            note: `The ${site.state} Medicaid programs that cover care at home, and who qualifies.`,
+          },
+          {
+            href: "/how-to-pay",
+            label: "Every way families pay",
+            note: "Private pay, long-term care insurance, VA benefits, and Medicaid, compared.",
+          },
+          {
+            href: "/services",
+            label: "What level of care you need",
+            note: "Companion, personal, dementia, overnight — what each includes and costs.",
+          },
+          {
+            href: `/services/${services[2].slug}`,
+            label: services[2].name,
+            note: "Usually the level that drives a quote above the companion rate.",
+          },
+          {
+            href: "/service-areas",
+            label: `Towns we serve in ${site.county}`,
+            note: "Rates are the same in every town we cover.",
+          },
+          {
+            href: `/home-care/${site.state.toLowerCase().replace(/ /g, "-")}`,
+            label: `Home care costs across ${site.state}`,
+            note: "County-by-county costs, programs, and local agency counts.",
+          },
+        ]}
+      />
     </>
   );
 }

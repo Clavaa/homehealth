@@ -292,3 +292,27 @@ export const services: Service[] = [
 export function getService(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug);
 }
+
+
+/**
+ * Which services a reader of each page most plausibly needs next. Hand-picked
+ * rather than "the next three in the array" — someone reading about dementia
+ * care is weighing overnight and 24-hour cover, not veterans' benefits.
+ */
+export const RELATED: Record<string, string[]> = {
+  "companion-care": ["personal-care", "respite-care", "dementia-care"],
+  "personal-care": ["companion-care", "post-hospital-care", "24-hour-care"],
+  "dementia-care": ["overnight-care", "24-hour-care", "respite-care"],
+  "24-hour-care": ["live-in-care", "overnight-care", "dementia-care"],
+  "live-in-care": ["24-hour-care", "personal-care", "overnight-care"],
+  "overnight-care": ["24-hour-care", "dementia-care", "live-in-care"],
+  "respite-care": ["companion-care", "dementia-care", "overnight-care"],
+  "post-hospital-care": ["personal-care", "24-hour-care", "companion-care"],
+  "veterans-care": ["personal-care", "companion-care", "post-hospital-care"],
+};
+
+export function relatedServices(slug: string): Service[] {
+  return (RELATED[slug] ?? [])
+    .map((s) => services.find((x) => x.slug === s))
+    .filter((s): s is Service => Boolean(s));
+}
