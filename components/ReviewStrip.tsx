@@ -1,11 +1,15 @@
 import { site } from "@/site.config";
 
 /**
- * Juniper review band. Quotes come from site.config placeholders — written in
- * the adult daughter's voice, and marked TODO until replaced with real,
- * permissioned Google reviews. Stars are butter (Style Bible).
+ * Juniper review band. Renders only when site.config holds real, permissioned
+ * quotes — it is empty by default, and the placeholders that once lived here
+ * were removed rather than published. Stars are butter (Style Bible).
  */
 export function ReviewStrip() {
+  // No real reviews yet — show nothing rather than a heading over an empty
+  // grid, and never the placeholders that used to sit here.
+  if (site.reviews.length === 0) return null;
+
   return (
     <section className="bg-juniper text-white">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
@@ -13,10 +17,7 @@ export function ReviewStrip() {
           What families tell us
         </h2>
         <p className="mt-3 max-w-xl text-white/75">
-          {/* TODO: replace with a true, current line once real reviews are in,
-              e.g. "From our Google reviews — shared with each family's permission." */}
-          Placeholder reviews below — replace with real, permissioned Google
-          reviews before launch.
+          Shared with each family&rsquo;s permission.
         </p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {site.reviews.map((r, i) => (

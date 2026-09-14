@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { site } from "@/site.config";
+import { site, hourlyRange, RATE_TBD } from "@/site.config";
 import { pageMeta } from "@/lib/seo";
 import { PricingPersonas } from "@/components/PricingPersonas";
 import { MidPageCTA } from "@/components/MidPageCTA";
@@ -9,7 +9,9 @@ import { Pill } from "@/components/Pill";
 
 export const metadata: Metadata = pageMeta({
   title: `Home Care Pricing in ${site.metro}, ${site.stateAbbr}`,
-  description: `What home care costs in ${site.county}: our real hourly rates (${site.rates.hourlyMin}–${site.rates.hourlyMax}/hr), what's included, and every way families pay. No contracts.`,
+  description: `What home care costs in ${site.county}: ${
+    hourlyRange() ? `our real hourly rates (${hourlyRange()})` : "how our pricing works"
+  }, what's included, and every way families pay. No contracts.`,
   path: "/pricing",
 });
 
@@ -39,11 +41,15 @@ const faqs = [
   },
   {
     q: "What makes the rate vary?",
-    a: `Level of care and schedule. Companion visits sit near the lower end; hands-on personal care, overnights, and short shifts sit higher. After a free assessment we quote one flat rate in writing — the range on this page (${site.rates.hourlyMin}–${site.rates.hourlyMax}/hr) is what that quote lands inside.`,
+    a: `Level of care and schedule. Companion visits sit near the lower end; hands-on personal care, overnights, and short shifts sit higher. After a free assessment we quote one flat rate in writing${
+      hourlyRange() ? ` — the range on this page (${hourlyRange()}) is what that quote lands inside.` : ", with no obligation to accept it."
+    }`,
   },
   {
     q: "Is there a minimum?",
-    a: `Yes — visits start at ${site.rates.minimumShiftHours} hours, long enough for a caregiver to do real good rather than rush in and out.`,
+    a: site.rates.minimumShiftHours
+      ? `Yes — visits start at ${site.rates.minimumShiftHours} hours, long enough for a caregiver to do real good rather than rush in and out.`
+      : "Yes — we set a visit minimum so a caregiver can do real good rather than rush in and out. We'll confirm it at your free assessment.",
   },
   {
     q: "Does insurance or Medicaid pay for any of this?",
@@ -59,16 +65,34 @@ export default function PricingPage() {
           Pricing
         </p>
         <h1 className="mt-3 max-w-3xl text-4xl leading-[1.1] text-juniper sm:text-5xl">
-          Real rates, in <em className="hero-italic">writing</em> — before you
-          ever talk to us
+          {hourlyRange() ? (
+            <>
+              Real rates, in <em className="hero-italic">writing</em> — before
+              you ever talk to us
+            </>
+          ) : (
+            <>
+              One flat rate, in <em className="hero-italic">writing</em> — and
+              no sales call to get it
+            </>
+          )}
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-ink/80">
-          Home care in {site.county} with our team runs{" "}
-          <strong className="text-juniper">
-            {site.rates.hourlyMin}–{site.rates.hourlyMax} per hour
-          </strong>
-          , depending on the level of care and schedule. That&rsquo;s the whole
-          answer — no sales call required to hear it.
+          {hourlyRange() ? (
+            <>
+              Home care in {site.county} with our team runs{" "}
+              <strong className="text-juniper">{hourlyRange()}</strong>,
+              depending on the level of care and schedule. That&rsquo;s the
+              whole answer — no sales call required to hear it.
+            </>
+          ) : (
+            <>
+              Home care in {site.county} is priced by the hour, and what you
+              pay depends on the level of care and the schedule. We quote one
+              flat rate in writing after a free in-home assessment — and
+              you&rsquo;re under no obligation to take it.
+            </>
+          )}
         </p>
       </section>
 

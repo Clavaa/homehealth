@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { site } from "@/site.config";
+import { site, hourlyRange } from "@/site.config";
 import { services } from "@/lib/services";
 import { Photo } from "@/components/Photo";
 import { MidPageCTA } from "@/components/MidPageCTA";
@@ -127,35 +127,38 @@ export default async function TownPage({
         />
       </section>
 
-      {/* Unique local content — TODO slots (do not launch without filling) */}
-      <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-[var(--radius-card)] rounded-tl-[var(--radius-corner)] bg-sand p-8">
-            <h2 className="text-2xl text-juniper">
-              Why {town.name} families call us
-            </h2>
-            <p className="mt-3 text-[16px] leading-relaxed text-ink/85">
-              {/* TODO(unique-content): 2–3 sentences of REAL local substance for
-                  this town — e.g. which neighborhoods our caregivers live in,
-                  the senior center or church communities we know, how fast we
-                  can typically staff here. No generic filler. */}
-              [TODO: Write 2–3 sentences of real, local substance about{" "}
-              {town.name} — neighborhoods our caregivers live in, community
-              places we know, typical staffing speed here.]
-            </p>
+      {/* Unique local content. Each town's real copy lives in
+          site.config towns[].localNote / caregiverNote; a town with neither
+          renders nothing here rather than shipping the brief itself, which is
+          what used to happen. These two cards are what make a town page more
+          than a name swap, so filling them is the difference between a local
+          page and a doorway page. */}
+      {(town.localNote || town.caregiverNote) && (
+        <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            {town.localNote && (
+              <div className="rounded-[var(--radius-card)] rounded-tl-[var(--radius-corner)] bg-sand p-8">
+                <h2 className="text-2xl text-juniper">
+                  Why {town.name} families call us
+                </h2>
+                <p className="mt-3 text-[16px] leading-relaxed text-ink/85">
+                  {town.localNote}
+                </p>
+              </div>
+            )}
+            {town.caregiverNote && (
+              <div className="rounded-[var(--radius-card)] bg-white p-8 shadow-sm ring-1 ring-mist">
+                <h2 className="text-2xl text-juniper">
+                  A caregiver you might meet
+                </h2>
+                <p className="mt-3 text-[16px] leading-relaxed text-ink/85">
+                  {town.caregiverNote}
+                </p>
+              </div>
+            )}
           </div>
-          <div className="rounded-[var(--radius-card)] bg-white p-8 shadow-sm ring-1 ring-mist">
-            <h2 className="text-2xl text-juniper">A caregiver you might meet</h2>
-            <p className="mt-3 text-[16px] leading-relaxed text-ink/85">
-              {/* TODO(unique-content): a short, true, permissioned profile of a
-                  caregiver who actually serves this town (first name, years of
-                  experience, one human detail). Never invent a person. */}
-              [TODO: Add a short, true, permissioned profile of a caregiver who
-              serves {town.name}. Never invent a person.]
-            </p>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Services available locally */}
       <section className="bg-sage">
@@ -175,9 +178,8 @@ export default async function TownPage({
             ))}
           </div>
           <p className="mt-6 max-w-2xl text-[15px] text-ink/75">
-            Rates in {town.name} are the same published rates as everywhere we
-            work: {site.rates.hourlyMin}–{site.rates.hourlyMax}/hr depending on
-            care level and schedule.{" "}
+            Rates in {town.name} are the same as everywhere we work
+            {hourlyRange() ? `: ${hourlyRange()} depending on care level and schedule` : ", quoted in writing after a free assessment"}.{" "}
             <Link href="/pricing" className="font-semibold text-juniper underline underline-offset-2">
               See pricing
             </Link>

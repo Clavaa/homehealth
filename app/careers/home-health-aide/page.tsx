@@ -8,7 +8,9 @@ import { Pill } from "@/components/Pill";
 
 export const metadata: Metadata = pageMeta({
   title: `Home Health Aide Job in ${site.metro}, ${site.stateAbbr}`,
-  description: `Home health aide / caregiver role in ${site.county}, ${site.stateAbbr}: ${site.careers.payRange}, W-2 employment, paid training, schedules that respect your life.`,
+  description: `Home health aide / caregiver role in ${site.county}, ${site.stateAbbr}: ${
+    site.careers.payRange ? `${site.careers.payRange}, ` : ""
+  }W-2 employment, paid training, schedules that respect your life.`,
   path: "/careers/home-health-aide",
 });
 
@@ -53,17 +55,20 @@ export default function HhaRolePage() {
         addressCountry: "US",
       },
     },
-    baseSalary: {
-      "@type": "MonetaryAmount",
-      currency: "USD",
-      value: {
-        "@type": "QuantitativeValue",
-        // TODO: real numeric pay range from site.config (careers.payMin/payMax)
-        minValue: site.careers.payMin,
-        maxValue: site.careers.payMax,
-        unitText: "HOUR",
-      },
-    },
+    ...(site.careers.payMin && site.careers.payMax
+      ? {
+          baseSalary: {
+            "@type": "MonetaryAmount",
+            currency: "USD",
+            value: {
+              "@type": "QuantitativeValue",
+              minValue: site.careers.payMin,
+              maxValue: site.careers.payMax,
+              unitText: "HOUR",
+            },
+          },
+        }
+      : {}),
     directApply: true,
   };
 
@@ -83,7 +88,10 @@ export default function HhaRolePage() {
           Open role · {site.metro}, {site.stateAbbr}
         </p>
         <h1 className="mt-3 max-w-3xl text-4xl leading-[1.1] text-juniper sm:text-5xl">
-          Home health aide — <em className="hero-italic">{site.careers.payRange}</em>
+          Home health aide —{" "}
+          <em className="hero-italic">
+            {site.careers.payRange ?? "join our team"}
+          </em>
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-ink/80">
           Part-time and full-time, W-2, paid training. You&rsquo;ll help older
@@ -135,9 +143,19 @@ export default function HhaRolePage() {
                   Pay &amp; schedule
                 </h3>
                 <p className="mt-2 text-[16px] text-ink/85">
-                  <strong>{site.careers.payRange}</strong> based on experience
-                  and shift type. Mornings, days, overnights, and weekends
-                  available — tell us what fits your life.
+                  {site.careers.payRange ? (
+                    <>
+                      <strong>{site.careers.payRange}</strong> based on
+                      experience and shift type.
+                    </>
+                  ) : (
+                    <>
+                      Pay is based on experience and shift type, and we state
+                      the number on the first call — not after an interview.
+                    </>
+                  )}{" "}
+                  Mornings, days, overnights, and weekends available — tell us
+                  what fits your life.
                 </p>
               </div>
             </div>

@@ -8,13 +8,15 @@ import { Pill } from "@/components/Pill";
 
 export const metadata: Metadata = pageMeta({
   title: `Caregiver & HHA Jobs in ${site.metro}, ${site.stateAbbr}`,
-  description: `Caregiver and home health aide jobs in ${site.county}: ${site.careers.payRange}, schedules that respect your life, and an office that answers when you call.`,
+  description: `Caregiver and home health aide jobs in ${site.county}: ${
+    site.careers.payRange ? `${site.careers.payRange}, ` : ""
+  }W-2 employment, paid training, and schedules that respect your life.`,
   path: "/careers",
 });
 
 const benefits = [
   {
-    title: `${site.careers.payRange}, stated up front`,
+    title: site.careers.payRange ? `${site.careers.payRange}, stated up front` : "Pay stated up front",
     body: "You just read our pay range on a public webpage. That's how we treat people — no 'competitive pay' mystery, no surprises at the interview.",
   },
   {
@@ -49,7 +51,9 @@ export default function CareersPage() {
           </p>
           <h1 className="mt-3 max-w-2xl text-4xl leading-[1.1] text-juniper sm:text-5xl">
             Caregiver &amp; HHA jobs in {site.metro} —{" "}
-            <em className="hero-italic">{site.careers.payRange}</em>
+            <em className="hero-italic">
+              {site.careers.payRange ?? "work that matters"}
+            </em>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-ink/80">
             Yes, the pay range is right there in the headline. If you&rsquo;re
@@ -118,7 +122,7 @@ export default function CareersPage() {
             </h3>
             <p className="mt-3 text-[15px] leading-relaxed text-ink/75">
               Companion and personal care for older adults in their homes
-              across {site.county}. {site.careers.payRange}.
+              across {site.county}.{site.careers.payRange ? ` ${site.careers.payRange}.` : ""}
             </p>
             <span className="mt-4 inline-block text-[15px] font-semibold text-juniper">
               Read the full role &rarr;

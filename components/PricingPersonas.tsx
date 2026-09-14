@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/site.config";
+import { site, hourlyRange, RATE_TBD } from "@/site.config";
 
 /**
  * Published-pricing persona cards (the anti-"Request Personalized Pricing"
@@ -10,23 +10,27 @@ import { site } from "@/site.config";
 const personas = [
   {
     title: "A few mornings a week",
-    price: `from ${site.rates.hourlyMin}/hr`,
-    example: `e.g. 4 hrs, 3 mornings a week ≈ ${site.rates.weeklyExampleMornings}/wk`,
+    price: site.rates.hourlyMin ? `from ${site.rates.hourlyMin}/hr` : RATE_TBD,
+    example: site.rates.weeklyExampleMornings
+      ? `e.g. 4 hrs, 3 mornings a week ≈ ${site.rates.weeklyExampleMornings}/wk`
+      : "e.g. 4 hrs, 3 mornings a week",
     story:
       "Dad's fine, mostly — it's showers, lunch, and someone noticing if something's off.",
     corner: "rounded-tl-[var(--radius-corner)]",
   },
   {
     title: "Help every day",
-    price: `from ${site.rates.hourlyMin}/hr`,
-    example: `e.g. 6 hrs every day ≈ ${site.rates.weeklyExampleDaily}/wk`,
+    price: site.rates.hourlyMin ? `from ${site.rates.hourlyMin}/hr` : RATE_TBD,
+    example: site.rates.weeklyExampleDaily
+      ? `e.g. 6 hrs every day ≈ ${site.rates.weeklyExampleDaily}/wk`
+      : "e.g. 6 hrs every day",
     story:
       "Mom needs a steady hand through mornings and meals — and you need to go back to work.",
     corner: "",
   },
   {
     title: "Around the clock",
-    price: `${site.rates.weeklyExample247}/wk`,
+    price: site.rates.weeklyExample247 ? `${site.rates.weeklyExample247}/wk` : RATE_TBD,
     example: "24/7 shift care or live-in — we'll help you pick",
     story:
       "After the second fall at night, 'checking in' stopped being enough.",
@@ -46,9 +50,19 @@ export function PricingPersonas({ showLink = true }: { showLink?: boolean }) {
             What home care actually costs
           </h2>
           <p className="mt-4 text-ink/80">
-            Most agencies make you sit through a sales call to hear a number.
-            Here are ours: {site.rates.hourlyMin}–{site.rates.hourlyMax} per
-            hour, depending on the level of care and schedule.
+            {hourlyRange() ? (
+              <>
+                Most agencies make you sit through a sales call to hear a
+                number. Here are ours: {hourlyRange()}, depending on the level
+                of care and schedule.
+              </>
+            ) : (
+              <>
+                Your rate depends on the level of care and the schedule, so we
+                quote it after a free in-home assessment — one flat hourly
+                number, in writing, with no obligation to accept it.
+              </>
+            )}
           </p>
         </div>
 

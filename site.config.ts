@@ -48,71 +48,90 @@ export const site = {
 
   // TODO: replace with the 10 real towns you serve (slug = URL segment).
   // Each town page ships with unique-content TODO slots — fill them per town.
+  /**
+   * Towns we serve. `localNote` and `caregiverNote` are the unique-content
+   * slots that stop these from being doorway pages — real local substance and
+   * a real, permissioned caregiver. Both optional: a town without them renders
+   * a shorter page rather than a templated one. NEVER invent a caregiver.
+   */
   towns: [
-    { name: "Wauwatosa", slug: "wauwatosa-wi" }, // TODO placeholder town
-    { name: "West Allis", slug: "west-allis-wi" }, // TODO placeholder town
-    { name: "Greenfield", slug: "greenfield-wi" }, // TODO placeholder town
-    { name: "Oak Creek", slug: "oak-creek-wi" }, // TODO placeholder town
-    { name: "Franklin", slug: "franklin-wi" }, // TODO placeholder town
-    { name: "Shorewood", slug: "shorewood-wi" }, // TODO placeholder town
-    { name: "Whitefish Bay", slug: "whitefish-bay-wi" }, // TODO placeholder town
-    { name: "Glendale", slug: "glendale-wi" }, // TODO placeholder town
-    { name: "Cudahy", slug: "cudahy-wi" }, // TODO placeholder town
-    { name: "South Milwaukee", slug: "south-milwaukee-wi" }, // TODO placeholder town
-  ],
-
+    { name: "Wauwatosa", slug: "wauwatosa-wi" },
+    { name: "West Allis", slug: "west-allis-wi" },
+    { name: "Greenfield", slug: "greenfield-wi" },
+    { name: "Oak Creek", slug: "oak-creek-wi" },
+    { name: "Franklin", slug: "franklin-wi" },
+    { name: "Shorewood", slug: "shorewood-wi" },
+    { name: "Whitefish Bay", slug: "whitefish-bay-wi" },
+    { name: "Glendale", slug: "glendale-wi" },
+    { name: "Cudahy", slug: "cudahy-wi" },
+    { name: "South Milwaukee", slug: "south-milwaukee-wi" },
+  ] as { name: string; slug: string; localNote?: string; caregiverNote?: string }[],
   // ── Rates (published transparency is the differentiator) ─────
   // TODO: replace every rate with your real published range.
+  /**
+   * Published rates — the site's whole differentiator, and EMPTY until real
+   * ones exist. Copy that quotes a range is written to fall back to "shared
+   * at your free assessment" rather than print "$XX", which read as broken on
+   * fourteen pages. Set hourlyMin and hourlyMax and every range returns.
+   */
   rates: {
-    hourlyMin: "$XX", // TODO real minimum hourly rate, e.g. "$32"
-    hourlyMax: "$XX", // TODO real maximum hourly rate, e.g. "$38"
-    weeklyExampleMornings: "$XXX", // TODO e.g. 4 hrs × 3 days at your rate
-    weeklyExampleDaily: "$X,XXX", // TODO e.g. 6 hrs × 7 days at your rate
-    weeklyExample247: "$X,XXX", // TODO real weekly 24/7 or live-in figure
-    minimumShiftHours: "X", // TODO real shift minimum, e.g. "3"
+    hourlyMin: null as string | null,
+    hourlyMax: null as string | null,
+    weeklyExampleMornings: null as string | null,
+    weeklyExampleDaily: null as string | null,
+    weeklyExample247: null as string | null,
+    minimumShiftHours: null as string | null,
   },
 
   // ── Careers ──────────────────────────────────────────────────
+  /**
+   * Caregiver pay. Null until real: payMin/payMax feed JobPosting structured
+   * data, and shipping "XX.00" as a salary is an error Google reports rather
+   * than merely a typo.
+   */
   careers: {
-    // TODO: real published caregiver pay range
-    payRange: "$XX–$XX/hr",
-    payMin: "XX.00", // TODO numeric, feeds JobPosting schema, e.g. "16.00"
-    payMax: "XX.00", // TODO numeric, feeds JobPosting schema, e.g. "20.00"
+    payRange: null as string | null,
+    payMin: null as string | null,
+    payMax: null as string | null,
   },
 
   // ── Proof (NEVER show numbers you can't back up) ─────────────
   // TODO: every stat below is a placeholder. Replace with real, current,
   // verifiable numbers — or remove the stat from the page. Do not launch
   // with placeholders visible.
+  /**
+   * Proof. EMPTY ON PURPOSE — every figure here was a placeholder, and an
+   * invented rating or headcount is a claim a family would act on when
+   * choosing care for a parent. Each tile renders only when its value is set,
+   * so filling any one of these brings just that tile back.
+   */
   stats: {
-    googleRating: "X.X", // TODO real Google rating, e.g. "4.9"
-    googleReviewCount: "XXX", // TODO real review count
-    caringSinceYear: "20XX", // TODO real founding year
-    caregiverCount: "XX+", // TODO real caregiver headcount
+    googleRating: null as string | null,
+    googleReviewCount: null as string | null,
+    caringSinceYear: null as string | null,
+    caregiverCount: null as string | null,
   },
 
   // TODO: replace with real, permissioned Google reviews (name, month/year,
   // exact text). These placeholders exist only to hold the layout.
-  reviews: [
-    {
-      quote:
-        "TODO: real review — placeholder: “Mom actually looks forward to Tuesdays now. Her caregiver remembers how she takes her coffee.”",
-      name: "TODO Reviewer name",
-      detail: "TODO e.g. Daughter of a client · Month 20XX · Google",
-    },
-    {
-      quote:
-        "TODO: real review — placeholder: “After Dad's discharge we were lost. They had someone at the house within two days and called us every week.”",
-      name: "TODO Reviewer name",
-      detail: "TODO e.g. Son of a client · Month 20XX · Google",
-    },
-    {
-      quote:
-        "TODO: real review — placeholder: “I live out of state. Their check-in notes after every visit are the only reason I sleep.”",
-      name: "TODO Reviewer name",
-      detail: "TODO e.g. Daughter of a client · Month 20XX · Google",
-    },
-  ],
+  /**
+   * Reviews. EMPTY ON PURPOSE. The three that lived here were written as
+   * layout placeholders, not quoted from anyone — publishing them would be
+   * fabricated testimony about care that never happened. Add real,
+   * permissioned Google reviews (name, month/year, exact text) and the band
+   * reappears on its own.
+   */
+  reviews: [] as { quote: string; name: string; detail: string }[],
 } as const;
+
+/** "$32–$38/hr" when both ends are set, otherwise null. */
+export function hourlyRange(): string | null {
+  return site.rates.hourlyMin && site.rates.hourlyMax
+    ? `${site.rates.hourlyMin}–${site.rates.hourlyMax}/hr`
+    : null;
+}
+
+/** The stock sentence used wherever a rate would otherwise appear. */
+export const RATE_TBD = "shared at your free assessment";
 
 export type SiteConfig = typeof site;

@@ -65,40 +65,59 @@ export default function HomePage() {
           />
         </div>
 
-        {/* Floating stats card — ALL numbers are config placeholders (TODO).
-            Replace with real, verifiable figures before launch. */}
+        {/* Floating stats card. Each tile renders only when site.config
+            actually holds that figure — the placeholders that used to fill
+            them were claims a family would act on. "Local" is the one tile
+            that is true today, so the card survives with just that. */}
         <div className="absolute inset-x-4 -bottom-16 sm:inset-x-6 lg:inset-x-0">
           <div className="mx-auto max-w-4xl rounded-[var(--radius-card)] bg-white p-6 shadow-[0_16px_40px_-16px_rgba(34,48,44,0.25)] sm:p-8">
-            <div className="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
-              <div>
-                <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
-                  {site.stats.googleRating}
-                  <span className="text-butter">★</span>
-                </p>
-                <p className="mt-1 text-sm text-ink/60">
-                  Google rating · {site.stats.googleReviewCount} reviews
-                </p>
-              </div>
-              <div>
-                <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
-                  {site.stats.caringSinceYear}
-                </p>
-                <p className="mt-1 text-sm text-ink/60">Caring since</p>
-              </div>
-              <div>
-                <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
-                  {site.stats.caregiverCount}
-                </p>
-                <p className="mt-1 text-sm text-ink/60">
-                  Caregivers, all background-checked
-                </p>
-              </div>
+            <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 text-center">
+              {site.stats.googleRating && (
+                <div>
+                  <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
+                    {site.stats.googleRating}
+                    <span className="text-butter">★</span>
+                  </p>
+                  <p className="mt-1 text-sm text-ink/60">
+                    Google rating
+                    {site.stats.googleReviewCount
+                      ? ` · ${site.stats.googleReviewCount} reviews`
+                      : ""}
+                  </p>
+                </div>
+              )}
+              {site.stats.caringSinceYear && (
+                <div>
+                  <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
+                    {site.stats.caringSinceYear}
+                  </p>
+                  <p className="mt-1 text-sm text-ink/60">Caring since</p>
+                </div>
+              )}
+              {site.stats.caregiverCount && (
+                <div>
+                  <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
+                    {site.stats.caregiverCount}
+                  </p>
+                  <p className="mt-1 text-sm text-ink/60">
+                    Caregivers, all background-checked
+                  </p>
+                </div>
+              )}
               <div>
                 <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
                   Local
                 </p>
                 <p className="mt-1 text-sm text-ink/60">
                   {site.county} owned &amp; operated
+                </p>
+              </div>
+              <div>
+                <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-juniper sm:text-3xl">
+                  Free
+                </p>
+                <p className="mt-1 text-sm text-ink/60">
+                  In-home assessment, no obligation
                 </p>
               </div>
             </div>
