@@ -2,10 +2,12 @@ import type { MetadataRoute } from "next";
 import { site } from "@/site.config";
 import { services } from "@/lib/services";
 import { states } from "@/lib/states";
+import { contentRevisedDate } from "@/lib/content-date";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.domain;
-  const now = new Date();
+  // Stable across deploys — see lib/content-date.
+  const now = contentRevisedDate;
 
   return [
     { url: `${base}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },

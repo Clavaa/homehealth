@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/site.config";
-import { states } from "@/lib/states";
 import { isIndexable } from "@/lib/indexable";
 
 export default function robots(): MetadataRoute.Robots {
@@ -19,10 +18,8 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: [
-      `${site.domain}/sitemap.xml`,
-      // County-guide shards: one sitemap per state.
-      ...states.map((s) => `${site.domain}/home-care/sitemap/${s.slug}.xml`),
-    ],
+    // One index that points at /sitemap.xml and all 51 per-state county
+    // shards — submit this single URL to Search Console.
+    sitemap: `${site.domain}/sitemap-index.xml`,
   };
 }

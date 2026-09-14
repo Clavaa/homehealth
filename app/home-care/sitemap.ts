@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { site } from "@/site.config";
 import { states } from "@/lib/states";
 import { countiesForState } from "@/lib/counties";
+import { contentRevisedDate } from "@/lib/content-date";
 
 /**
  * Sharded sitemaps for the county-guide section — one sitemap per state
@@ -14,7 +15,8 @@ export function generateSitemaps(): { id: string }[] {
 
 export default function sitemap({ id }: { id: string }): MetadataRoute.Sitemap {
   const base = site.domain;
-  const now = new Date();
+  // Stable across deploys — see lib/content-date.
+  const now = contentRevisedDate;
   const stateEntry = {
     url: `${base}/home-care/${id}`,
     lastModified: now,
