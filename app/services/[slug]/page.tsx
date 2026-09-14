@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { site } from "@/site.config";
 import { services, getService } from "@/lib/services";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import { Photo } from "@/components/Photo";
 import { MidPageCTA } from "@/components/MidPageCTA";
 import { ServiceAreaModule } from "@/components/ServiceAreaModule";
 import { RecruitBand } from "@/components/RecruitBand";
@@ -110,7 +110,10 @@ export default async function ServicePage({
             )}
           </div>
         </div>
-        <PhotoPlaceholder
+        <Photo
+          slug={`service-${service.slug}`}
+          priority
+          sizes="(min-width: 1024px) 45vw, 100vw"
           label={`${service.name} photo`}
           intent={`Caregiver in juniper polo and client together, mid-moment that says "${service.name.toLowerCase()}" — warm window light, lived-in home, never posed`}
           bigCorner="tr"

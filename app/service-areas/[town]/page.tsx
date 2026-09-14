@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { site } from "@/site.config";
 import { services } from "@/lib/services";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import { Photo } from "@/components/Photo";
 import { MidPageCTA } from "@/components/MidPageCTA";
 import { RecruitBand } from "@/components/RecruitBand";
 import { JsonLd } from "@/components/JsonLd";
@@ -116,7 +116,10 @@ export default async function TownPage({
             )}
           </div>
         </div>
-        <PhotoPlaceholder
+        <Photo
+          slug={`town-${town.slug}`}
+          priority
+          sizes="(min-width: 1024px) 45vw, 100vw"
           label={`${town.name} photo`}
           intent={`A caregiver and client on a real ${town.name} front porch or neighborhood sidewalk, warm light — recognizably local, not stock`}
           bigCorner="tr"

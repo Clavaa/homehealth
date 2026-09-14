@@ -3,7 +3,7 @@ import { site } from "@/site.config";
 import { pageMeta } from "@/lib/seo";
 import { services } from "@/lib/services";
 import { Pill } from "@/components/Pill";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import { Photo } from "@/components/Photo";
 import { AssessmentForm } from "@/components/AssessmentForm";
 import { PricingPersonas } from "@/components/PricingPersonas";
 import { ReviewStrip } from "@/components/ReviewStrip";
@@ -54,7 +54,10 @@ export default function HomePage() {
             )}
           </div>
 
-          <PhotoPlaceholder
+          <Photo
+            slug="home-hero"
+            priority
+            sizes="(min-width: 1024px) 42vw, 100vw"
             label="Hero photo"
             intent="A caregiver in a juniper polo and an older client laughing together over a jigsaw puzzle at a kitchen table, warm window light, lived-in home"
             bigCorner="br"
@@ -168,7 +171,9 @@ export default function HomePage() {
               </p>
             )}
             <div className="mt-6 border-t border-mist pt-5">
-              <PhotoPlaceholder
+              <Photo
+                slug="care-team"
+                sizes="(min-width: 1024px) 45vw, 100vw"
                 label="Care team photo"
                 intent="Our care coordinator on the phone at a warm, tidy desk, smiling mid-conversation — approachable, not corporate"
                 bigCorner="none"

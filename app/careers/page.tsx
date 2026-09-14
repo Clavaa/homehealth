@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { site } from "@/site.config";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import { Photo } from "@/components/Photo";
 import { CareerForm } from "@/components/CareerForm";
 import { Pill } from "@/components/Pill";
 
@@ -67,7 +67,10 @@ export default function CareersPage() {
             )}
           </div>
         </div>
-        <PhotoPlaceholder
+        <Photo
+          slug="careers-hero"
+          priority
+          sizes="(min-width: 1024px) 45vw, 100vw"
           label="Careers hero photo"
           intent="Two caregivers in juniper polos laughing together by a car between visits — real team warmth, daylight, no stock smiles"
           bigCorner="bl"
